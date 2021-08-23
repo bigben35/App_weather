@@ -11,6 +11,10 @@ const heure = document.querySelectorAll('.heure-nom-prevision');
 const tempPourH = document.querySelectorAll('.heure-prevision-valeur');
 const joursDiv = document.querySelectorAll('.jour-prevision-nom');
 const tempJoursDiv = document.querySelectorAll('.jour-prevision-temp');
+const imgIcone = document.querySelector('.logo-meteo');
+const chargementContainer = document.querySelector('.icone-chargement');
+
+
 
 if(navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(position => {
@@ -80,6 +84,18 @@ function appelApi(long,lat) {
         for(let j =0 ; j<7; j++) {
             tempJoursDiv[j].innerText = `${Math.trunc(resultApi.daily[j+1].temp.day)}°`
         }
+
+
+        //Icone dynamique
+
+        if(heureActuelle >= 6 && heureActuelle < 20) {
+            imgIcone.src = `ressources/jour/${resultApi.current.weather[0].icon}.svg`
+        } else {
+            imgIcone.src = `ressources/nuit/${resultApi.current.weather[0].icon}.svg`
+
+        }
+
+        chargementContainer.classList.add('disparition');
 
         
     })
