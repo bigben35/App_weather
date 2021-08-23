@@ -1,3 +1,6 @@
+import tabJoursEnOrdre from "./joursSemaine.js";
+
+console.log(tabJoursEnOrdre);
 const clefApi = "0e62e973827690fddafa0ca13feefffd";
 let resultApi;
 
@@ -6,6 +9,8 @@ const temperature = document.querySelector('.temperature');
 const localisation = document.querySelector('.localisation');
 const heure = document.querySelectorAll('.heure-nom-prevision');
 const tempPourH = document.querySelectorAll('.heure-prevision-valeur');
+const joursDiv = document.querySelectorAll('.jour-prevision-nom');
+const tempJoursDiv = document.querySelectorAll('.jour-prevision-temp');
 
 if(navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(position => {
@@ -60,6 +65,20 @@ function appelApi(long,lat) {
 
         for(let j = 0; j < tempPourH.length; j++) {
             tempPourH[j].innerText = `${Math.trunc(resultApi.hourly[j*3].temp)}°`
+        }
+
+
+        // 3 premieres lettres des jours
+
+        for(let i =0 ; i< tabJoursEnOrdre.length; i++) {
+            joursDiv[i].innerText = tabJoursEnOrdre[i].slice(0,3);
+        }
+
+
+        //temp par jour
+
+        for(let j =0 ; j<7; j++) {
+            tempJoursDiv[j].innerText = `${Math.trunc(resultApi.daily[j+1].temp.day)}°`
         }
 
         
